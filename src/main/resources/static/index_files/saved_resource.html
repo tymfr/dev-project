@@ -1,0 +1,408 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0025)http://sh.wenming.cn/wmw/ -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>XX文明网</title>
+<link href="./global111.css" rel="stylesheet" type="text/css">
+<link href="./style111.css" rel="stylesheet" type="text/css">
+<script async="" src="./ta.js"></script><script src="./jquery.min.js" type="text/javascript" charset="utf-8"></script><style type="text/css" abt="234"></style>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.zixunTitle a').mouseover(function(){
+		if(!$(this).hasClass('menuOn')){
+			var idx = $(this).index('.zixunTitle a');
+			$('.menuOn').removeClass('menuOn');
+			$(this).addClass('menuOn');
+			$('.zixunContent > ul:not(.hide)').addClass('hide');
+			$('.zixunContent > ul').eq(idx).removeClass('hide');
+		}
+	});
+});
+</script>
+
+<script>//console.log('a')
+</script><script>doAdblock();
+function doAdblock(){
+    (function() {
+        function A() {}
+        A.prototype = {
+            rules: {
+                'pps_pps': {
+                    'find': /^http:\/\/www\.iqiyi\.com\/player\/cupid\/common\/pps_flvplay_s\.swf/,
+                    'replace': 'http://swf.adtchrome.com/pps_20140420.swf'
+                },
+                '17173_in':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/PreloaderFile(Customer)?\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_in_20150522.swf"
+                },
+                '17173_out':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/PreloaderFileFirstpage\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_out_20150522.swf"
+                },
+                '17173_live':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/Player_stream(_firstpage)?\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_stream_20150522.swf"
+                },
+                '17173_live_out':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/Player_stream_(custom)?Out\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173.out.Live.swf"
+                }
+            },
+            _done: null,
+            get done() {
+                if(!this._done) {
+                    this._done = new Array();
+                }
+                return this._done;
+            },
+            addAnimations: function() {
+                var style = document.createElement('style');
+                style.type = 'text/css';
+                style.innerHTML = 'object,embed{\
+                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;\
+                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;\
+                -o-animation-duration:.001s;-o-animation-name:playerInserted;\
+                animation-duration:.001s;animation-name:playerInserted;}\
+                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}';
+                document.getElementsByTagName('head')[0].appendChild(style);
+            },
+            animationsHandler: function(e) {
+                if(e.animationName === 'playerInserted') {
+                    this.replace(e.target);
+                }
+            },
+            replace: function(elem) {
+                if (/http:\/\/v.youku.com\/v_show\/.*/.test(window.location.href)){
+                    var tag = document.getElementById("playerBox").getAttribute("player")
+                    if (tag == "adt"){
+                        console.log("adt adv")
+                        return;
+                    }
+                }
+                if(this.done.indexOf(elem) != -1) return;
+                this.done.push(elem);
+                var player = elem.data || elem.src;
+                if(!player) return;
+                var i, find, replace = false;
+                for(i in this.rules) {
+                    find = this.rules[i]['find'];
+                    if(find.test(player)) {
+                        replace = this.rules[i]['replace'];
+                        if('function' === typeof this.rules[i]['preHandle']) {
+                            this.rules[i]['preHandle'].bind(this, elem, find, replace, player)();
+                        }else{
+                            this.reallyReplace.bind(this, elem, find, replace)();
+                        }
+                        break;
+                    }
+                }
+            },
+            reallyReplace: function(elem, find, replace) {
+                elem.data && (elem.data = elem.data.replace(find, replace)) || elem.src && ((elem.src = elem.src.replace(find, replace)) && (elem.style.display = 'block'));
+                var b = elem.querySelector("param[name='movie']");
+                this.reloadPlugin(elem);
+            },
+            reloadPlugin: function(elem) {
+                var nextSibling = elem.nextSibling;
+                var parentNode = elem.parentNode;
+                parentNode.removeChild(elem);
+                var newElem = elem.cloneNode(true);
+                this.done.push(newElem);
+                if(nextSibling) {
+                    parentNode.insertBefore(newElem, nextSibling);
+                } else {
+                    parentNode.appendChild(newElem);
+                }
+            },
+            init: function() {
+                var handler = this.animationsHandler.bind(this);
+                //document.body.addEventListener('webkitAnimationStart', handler, false);
+                //document.body.addEventListener('msAnimationStart', handler, false);
+                //document.body.addEventListener('oAnimationStart', handler, false);
+                //document.body.addEventListener('animationstart', handler, false);
+                this.addAnimations();
+            }
+        };
+        new A().init();
+    })();
+}
+// 20140730
+(function cnbeta() {
+    if (document.URL.indexOf('cnbeta.com') >= 0) {
+        var elms = document.body.querySelectorAll("p>embed");
+        Array.prototype.forEach.call(elms, function(elm) {
+            elm.style.marginLeft = "0px";
+        });
+    }
+})();
+//baidu
+if(document.URL.indexOf('www.baidu.com') >= 0){
+    if(document && document.getElementsByTagName && document.getElementById && document.body){
+        var aa = function(){
+            var all = document.body.querySelectorAll("#content_left div,#content_left table");
+            for(var i = 0; i < all.length; i++){
+                if(/display:\s?(table|block)\s!important/.test(all[i].getAttribute("style"))){all[i].style.display= "none";all[i].style.visibility='hidden';}
+            }
+            all = document.body.querySelectorAll('.result.c-container[id="1"]');
+            //if(all.length == 1) return;
+            for(var i = 0; i < all.length; i++){
+                if(all[i].innerHTML && all[i].innerHTML.indexOf('广告')>-1){
+                    all[i].style.display= "none";all[i].style.visibility='hidden';
+                }
+            }
+        }
+        aa();
+        document.getElementById('wrapper_wrapper').addEventListener('DOMSubtreeModified',aa)
+    };
+}
+// 20140922
+(function kill_360() {
+    if (document.URL.indexOf('so.com') >= 0) {
+        document.getElementById("e_idea_pp").style.display = none;
+    }
+})();
+if (document.URL.indexOf("tv.sohu.com") >= 0){
+    if (document.cookie.indexOf("fee_status=true")==-1){document.cookie='fee_status=true'};
+}
+if (document.URL.indexOf("56.com") >= 0){
+    if (document.cookie.indexOf("fee_status=true")==-1){document.cookie='fee_status=true'};
+}
+if (document.URL.indexOf("iqiyi.com") >= 0){
+    if (document.cookie.indexOf("player_forcedType=h5_VOD")==-1){
+        document.cookie='player_forcedType=h5_VOD'
+        if(localStorage.reloadTime && Date.now() - parseInt(localStorage.reloadTime)<60000){
+            console.log('no reload')
+        }else{
+            location.reload()
+            localStorage.reloadTime = Date.now();
+        }
+    }
+}
+</script><style type="text/css">object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}</style></head>
+<body>
+<div class="main">
+	<div class="header" ><a href="#"></a>
+		<div class="date" id="date">
+		2017年12月14日 星期四</div>
+		<script type="text/javascript">
+		var dayNames = new Array("星期日","星期一","星期二","星期三","星期四","星期五","星期六"); 
+		var nowDate = new Date();
+		var str = nowDate.getFullYear()+"年"+(nowDate.getMonth() + 1)+"月"+nowDate.getDate()+"日 "+dayNames[nowDate.getDay()];
+		$('#date').append(str);
+		</script> 
+	</div>
+    <div class="nav">
+    	<div class="nav_1">
+        	<ul class="clearfix">
+            	<li><a href="#" title="">首页</a></li>
+            	<li><a href="#" title="">关于我们</a></li>
+                <li><a href="#" title="">综合</a></li>
+                <li><a href="#" title="">活动指导</a></li>
+                <li><a href="#" title="">调研</a></li>
+                <li><a href="#" title="">未成年人</a></li>
+                <li><a href="#" title="">志愿服务</a></li>
+                <li><a href="#" title="">公益广告</a></li>
+                <li><a href="#" title="">志愿者协会</a></li>
+                <li><a href="#" title="">区委办</a></li>   
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="content_1">
+    	<div class="pic">
+			
+			<iframe src="./tpxwyl.html" width="592" height="287" frameborder="0"></iframe>
+		
+		</div>
+        <div class="news">
+            
+			<font color="#115a8b"><p class="title"><a href="#" class="newsOn" title=""></a><a href="#" title="童心祝福十九大 鼓号声声展风采">童心祝福十九大 鼓号声声展风采</a></p></font>
+            <p><a href="#" class="newsOn" title="">[中国少年先锋队组织的鼓号队，对少先队员是一种教育手段]</a></p>
+			
+            
+			<p class="title"><a href="#" title=""></a><a href="#" title="&lt;FONT color=#115a8b&gt;不忘历史 矢志复兴:写在第四个南京大屠杀死难者国家公祭日&lt;/FONT&gt;"><font color="#115a8b">不忘历史 矢志复兴:写在第四个南京大屠杀死难者国家公祭日</font></a></p>
+            <p><a href="#" title="">[为实现中华民族伟大复兴中国梦而不懈奋斗]</a></p>
+			
+            
+			<p class="title"><a href="#" title=""></a><a href="#" title="XX市委务虚会上 李强谈新时代XX发展取向、战略优势">XX市委务虚会上 李强谈新时代XX发展取向、战略优势</a></p>
+            <p><a href="#" title="">[全力打响XX服务、XX制造、XX购物、XX文化四大品牌。]</a></p>
+			
+            
+			<p class="title"><a href="#" title=""></a><a href="#" title="宣传党的十九大精神优秀歌曲巡演活动唱响长宁">宣传党的十九大精神优秀歌曲巡演活动唱响长宁</a></p>
+            <p><a href="#" title="">[2018年将按照中央要求继续“七进”。]</a></p>
+			
+            
+			<p class="title"><a href="#" title=""></a><a href="#" title="XX首届网络文化节“网络好榜样”评选结果出炉">XX首届网络文化节“网络好榜样”评选结果出炉</a></p>
+            <p><a href="#" title="">[培育健康向上的网络生活方式和网络文明素养，积极传播网络正能量]</a></p>
+			
+            
+			<p class="title"><a href="#" title=""></a><a href="#" title="传承民族文化：沪中职校“十大基地”活动引人入胜">传承民族文化：沪中职校“十大基地”活动引人入胜</a></p>
+            <p><a href="#" title="">[“十大基地”肩负着传承和弘扬中华优秀传统文化的重任与使命。
+]</a></p>
+			
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="content_2 clearfix">
+    	<div class="content_2_left">
+        	<div class="quickLink">
+            	<div class="linkTitle"></div>
+                <div class="linkContent">
+                	<ul>
+                    	<a href="#" title=""><li>木南专栏</li></a>
+                        <a href="#" title=""><li>文明修身</li></a>
+                        <a href="#" title=""><li>网络活动</li></a>
+                    </ul>
+                    <ul>
+                        <a href="#" title=""><li>公益广告</li></a>
+                        <a href="#" title=""><li>公益微电影</li></a>
+                        <a href="#" title=""><li>在线创建</li></a>
+                    </ul>
+                    <ul>
+                    	<a href="#" title=""><li>好人365</li></a>
+                        <a href="#" title=""><li>家风家训</li></a>
+                        <a href="#" title=""><li>我们的节日</li></a>
+                    </ul>
+                </div>
+                <div class="linkFoot"></div>
+            </div>
+            <div class="yuanchuang">
+            	<div class="yuanchuangTitle"></div>
+                <ul>
+                	
+					<li><a href="#" class="newsOn" title=""></a><a href="#" title="&lt;FONT color=#115a8b&gt;[木南赏片] 我见到母亲&lt;/FONT&gt;"><font color="#115a8b">[木南赏片] 我见到母亲</font></a></li>
+                    
+					
+					<li><a href="#" title=""></a><a href="#" title="[评论] 用生态文明建设美丽中国">[评论] 用生态文明建设美丽中国</a></li>
+                    
+					
+					<li><a href="#" title=""></a><a href="#" title="[海派修身达人] 暖心“达人”温暖新时代">[海派修身达人] 暖心“达人”温暖新时代</a></li>
+                    
+					
+					<li><a href="#" title=""></a><a href="#" title="[广告] 庆祝十九大公益广告宣传素材">[广告] 庆祝十九大公益广告宣传素材</a></li>
+					
+                </ul>
+                <div class="yuanchuangFoot"></div>
+            </div>
+            <div class="clear"></div>
+            <div class="hudong clearfix">
+				
+            	<ul class="fr clearfix">
+                	<!--li><a href="#" title="">视频点播</a></li>
+                    <li><a href="#" title="">文明微博</a></li-->
+                    <li><a href="#" title="">海派风情</a></li>
+                    <li><a href="#" title="">美德少年</a></li>
+                    <li><a href="#" title="">诚信创建</a></li>
+                    <li><a href="#" title="">特约评论</a></li>
+                    <li><a href="#" title="">微信发布</a></li>
+                    <li><a href="#" title="">公益有声赛</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="content_2_right">
+        	<div class="banner">
+        	  <object id="FlashID" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="402" height="86">
+        	    <param name="movie" value="http://images1.wenming.cn/web_sh/FLASH/201211/P020181013510140498431.swf">
+        	    <param name="quality" value="high">
+        	    <param name="wmode" value="opaque">
+        	    <param name="swfversion" value="6.0.65.0">
+        	    <!-- 此 param 标签提示使用 Flash Player 6.0 r65 和更高版本的用户下载最新版本的 Flash Player。如果您不想让用户看到该提示，请将其删除。 -->
+        	    <param name="expressinstall" value="Scripts/expressInstall.swf">
+        	    <!-- 下一个对象标签用于非 IE 浏览器。所以使用 IECC 将其从 IE 隐藏。 -->
+        	    <!--[if !IE]>-->
+        	    <object type="">
+        	      <!--<![endif]-->
+        	      <param name="quality" value="high">
+        	      <param name="wmode" value="opaque">
+        	      <param name="swfversion" value="6.0.65.0">
+        	      <param name="expressinstall" value="Scripts/expressInstall.swf">
+        	      <!-- 浏览器将以下替代内容显示给使用 Flash Player 6.0 和更低版本的用户。 -->
+        	      <div>
+        	        <p><a href="#"><img src="./test_sl02.jpg" width="402" height="122"></a></p>
+      	        </div>
+        	      <!--[if !IE]>-->
+      	      </object>
+        	    <!--<![endif]-->
+      	    </object>
+        	</div>
+            <div class="zixunList">
+				<div class="zixunTitle">
+					<ul>
+						<li><a class="menuOn" href="#">公告</a></li>
+						<li><a href="#" title="">导读</a></li>
+						<li><a href="#" title="">访谈</a></li>
+					</ul>
+				</div>
+				<div class="zixunContent">
+                	<ul>
+	                	
+						<li><a class="newsOn" href="#" title="">•</a><a href="#" title="特别鸣谢（2018年登报）">特别鸣谢（2018年登报）</a></li>
+	                    
+						
+						<li><a href="#" title="">•</a><a href="#" title="XX市志愿服务公益基金会2018年度资助项目名单">XX市志愿服务公益基金会2018年度资助项目名单</a></li>
+	                    
+						
+						<li><a href="#" title="">•</a><a href="#" title="XX志愿服务公益基金会2018年度资助项目评审结果">XX志愿服务公益基金会2018年度资助项目评审结果</a></li>
+						
+						
+	                    <li><a href="#" title="">•</a><a href="#" title="关于开展2018年度XX社会主义精神文明好人好事评选的通知">关于开展2018年度XX社会主义精神文明好人好事评选的通知</a></li>
+						
+	                </ul>
+                	<ul class="hide">
+	                	
+						<li><a class="newsOn" href="#" title="">•</a><a href="#" title="刘奇葆：不断开辟21世纪马克思主义发展新境界">刘奇葆：不断开辟21世纪马克思主义发展新境界</a></li>
+	                    
+						
+						<li><a href="#" title="">•</a><a href="#" title="建党95周年庆祝大会举行 习近平发表重要讲话">建党95周年庆祝大会举行 习近平发表重要讲话</a></li>
+	                    
+						
+						<li><a href="#" title="">•</a><a href="#" title="习近平：更加富有成效抓好改革工作">习近平：更加富有成效抓好改革工作</a></li>
+						
+						
+	                    <li><a href="#" title="">•</a><a href="#" title="刘云山：牢固树立文化自信和价值观自信">刘云山：牢固树立文化自信和价值观自信</a></li>
+						
+	                </ul>
+                	<ul class="hide">
+	                	
+						<li><a class="newsOn" href="#" title="">•</a><a href="#" title="&lt;FONT color=#115a8b&gt;杨兆顺：做社区居民的“贴心人”&lt;/FONT&gt;"><font color="#115a8b">杨兆顺：做社区居民的“贴心人”</font></a></li>
+	                    
+						
+						<li><a href="#" title="">•</a><a href="#" title="委员谈幸福：有财富不一定有幸福，心态是关键">委员谈幸福：有财富不一定有幸福，心态是关键</a></li>
+	                    
+						
+						<li><a href="#" title="">•</a><a href="#" title="政协委员与市民网上共话“低碳”">政协委员与市民网上共话“低碳”</a></li>
+						
+						
+	                    <li><a href="#" title="">•</a><a href="#" title="王生：学校、家庭、社会合力让“5+2&gt;7”">王生：学校、家庭、社会合力让“5+2&gt;7”</a></li>
+						
+	                </ul>
+				</div>
+          </div>
+  </div>
+    </div>
+</div>
+
+<div class="footer"><br><br><br><noscript>&lt;img src="http://ta.trs.cn/c/1.gif?mpId=131&amp;jsoff=1" style="border:0" alt /&gt;</noscript><table width="1000" border="0" align="center" cellpadding="0" cellspacing="0">
+
+
+<script>
+var _taq = _taq || [];
+_taq.home = 'http://ta.trs.cn/c';
+_taq.push(['_mpId', '131']);
+_taq.push(['_cli', '1']);
+(function(d, o, t) {
+	if (window.inTRSDesignMode) return;
+	var ma = d.createElement(o); ma.async = true; ma.commonresource="1"; ma.src = t;
+	var s = d.getElementsByTagName(o)[0]; s.parentNode.insertBefore(ma, s);
+})(document, 'script', 'http://ta.trs.cn/c/js/ta.js');
+</script>
+  <tbody><tr>
+    <td colspan="2"></td>
+  </tr>
+</tbody></table></div>
+
+</body></html>

@@ -1,0 +1,73 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*											LAYOUT											*/
+body{ background:url(background.jpg);}
+.main{ width:998px;margin:0 auto; border:solid #e2cfc0; border-width:0 1px;}
+.content_1{ width:998px; height:303px; margin:6px auto 0; }
+.pic{ width:592px; height:287px; float:left;}
+.news{width:402px; height:303px; float:right; position:relative;}
+.more{ height:12px; font-size:12px; color:#115a8b; position:absolute; right:0; top:0;}
+.content_2{ width:998px;  margin:5px auto 0;}
+.content_2_left{ width:592px; float:left;}
+.content_2_right{width:402px; float:right; }
+.quickLink{width:325px;heigh:134px; float:left;}
+.yuanchuang{width:254px;heigh:134px; float:right;}
+.linkTitle{width:325px; height:32px; background:url(linktitle.jpg) no-repeat;}
+.yuanchuangTitle{width:254px; height:32px; background:url(yuanchuangtitle.jpg) no-repeat;}
+.linkContent{width:325px; height:92px; background:url(linkbg.jpg) no-repeat;}
+.linkFoot, .yuanchuangFoot{width:325px; height:1px; background:#e6d3c8; margin-top:5px;}
+.yuanchuangFoot{width:247px; margin-top:7px;}
+.hudong{ width:581px; height:106px; margin-top:8px; background:url(hudongbg.jpg) no-repeat; }
+.banner{width:402px; height:86px; margin-bottom:9px;}
+.zixunTitle{width:402px; height:36px; background:url(zixunbg.jpg) repeat-x;}
+.zixunContent{width:400px;height:112px; background:#fff; border: solid #e2cfc0; border-width:0 0 1px 1px;}
+.footer{width:1000px; height:34px; background:url(footer.png) center bottom no-repeat; margin:0 auto;}
+
+
+/*											HEADER											*/
+.header{width:998px; height:242px; background:url(headerbg.jpg) no-repeat; margin:0 auto; position:relative;}
+
+
+
+/*											NAV											*/
+.nav{ width:998px; height:36px; background:#8f091c; margin:0 auto;}
+.nav_1{ width:820px; height:36px; float:left; _width:845px;}
+.nav_1 ul{ padding-left:3px;}
+.nav li{ height:36px;float:left; padding:0 9px; font-weight:bold; _padding:0; _width:75px;_display:inline;}
+.nav li a{ height:36px; line-height:40px; font-size:14px; color:#fff; display:block; text-align:center;}
+.search_1{ font-size:14px; color:#FFF; height:30px; float:left; text-align:right; margin-left:5px; margin-top:13px;}
+.search{width:135px; height:36px; float:right; padding-top:6px; margin-right:2px; _width:110px;}
+.testCheck{ background:url(searchbg.jpg) repeat-x;  border:0; width:105px; height:24px; line-height:30px; font-size:12px; color:#575656; vertical-align: middle; _width:80px;}
+.testCheckBtn{ background: url(searchbtn.jpg) no-repeat; border:0; width:24px; height:24px;vertical-align:middle; cursor:pointer;}
+
+
+
+/*											FOOTER											*/
+
+
+
+/*											FONT											*/
+.news p{ text-align:center; border-bottom: dotted #545454 1px; line-height:19px; padding-bottom:3px;}
+.news p a{ font-size:12px; color:#545454;}
+.news p.title{ border:none; margin-top:7px; line-height:20px; padding:0}
+.news p.title a{ font-size:14px; font-weight: bold;}
+.news p.foot{border:none;}
+.news p a.newsOn{ color:#115a8b;}
+.more a{ color:#115a8b;}
+.quickLink ul{ width:70px; height:85px; margin-left:36px; float:left;_padding-left:36px;_margin:0;}
+.quickLink ul li{width:70px;font-size:14px; line-height:31px; color:#363636;}
+.yuanchuang ul{ width:241px; margin-left:8px; margin-top:2px;}
+.yuanchuang ul li a {width:241px;font-size:14px; line-height:22px; color:#464646;}
+.yuanchuang ul li a.newsOn {color:#92624f;}
+.hudong ul{ padding-top:80px; }
+.hudong li{ width:72px; height:18px; line-height:18px; float:left; text-align:center;}
+.hudong li a{ color: #363636;}
+.hudong li a:hover{color:#92624f;}
+.zixunTitle li{ float:left;}
+.zixunTitle li a{ width:63px; display:block; height:36px; font-weight:bold; font-size:14px; background:url(listbg.jpg) no-repeat; text-align:center; line-height:45px; color:#FFF;}
+.zixunTitle a.menuOn, .zixunTitle a:hover{width:116px; background:url(listbgOn.jpg) no-repeat;}
+.zixunContent ul{  margin-left:10px; padding-top:5px;}
+.zixunContent li a { font-size:14px; color:#464646; line-height:25px;}
+.zixunContent li a.newsOn{ color:#115a8b;}
+.date{ position:absolute; color:#bc1405; top:150px; left:845px; letter-spacing:1px;}
